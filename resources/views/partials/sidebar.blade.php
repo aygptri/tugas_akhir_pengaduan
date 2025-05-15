@@ -24,13 +24,13 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
+            @if (auth()->user()->hasRole('admin'))
             <div class="sidebar-heading">
                 ROlE PERMISION
             </div>
 
 
             <!-- Nav Item - Utilities Collapse Menu -->
-             @if (auth()->user()->hasRole('admin'))
              <li class="nav-item">
                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                  aria-expanded="true" aria-controls="collapseUtilities">
@@ -65,10 +65,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                    
-<form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit" class="dropdown-item">Logout</button>
-</form>
+
                         <a class="collapse-item" href="tulisan">form status</a>
                     </div>
                 </div>

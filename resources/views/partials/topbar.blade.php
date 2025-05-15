@@ -52,14 +52,10 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">nanti nama di anu kesini</span>
-                               
-                            </a>
-
-                        </li>
+                        <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="dropdown-item">Logout</button>
+</form>
 
                     </ul>
 
