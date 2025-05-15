@@ -124,7 +124,10 @@
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="dropdown-item">Logout</button>
+</form>
                         <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
