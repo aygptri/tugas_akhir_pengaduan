@@ -5,9 +5,29 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
 
+
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/create', [UserController::class, 'create'])->name('siswa.create');
+    Route::post('/create', [UserController::class, 'store'])->name('siswa.store');
+});
+
+
+
+
+
+
+
+
 Route::get('/create', function () {
     return view('admin.create');
 })->name('admin.create');
+Route::get('/rolemanagement', function () {
+    return view('admin.rolemanagement');
+})->name('admin.rolemanagement');
+Route::get('/edit', function () {
+    return view('admin.edit');
+})->name('admin.edit');
 
 
 
@@ -20,18 +40,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(middleware: ['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
-    
-});
 
-Route::get('dashbord', function(){
-    return view('dashboard');
 
-});
+
+
 
 
 Route::get('admin',function(){

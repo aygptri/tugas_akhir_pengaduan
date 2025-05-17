@@ -17,14 +17,14 @@
             <li class="nav-item active">
                 <a class="nav-link" href="dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Daftar pengaduan</span></a>
             </li>
 
             <!-- Divider -->
+            @if (auth()->user()->hasRole('admin'))
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            @if (auth()->user()->hasRole('admin'))
             <div class="sidebar-heading">
                 ROlE PERMISION
             </div>
@@ -40,8 +40,10 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="edit">edit role</a>
+                        <a class="collapse-item" href="rolemanagement">Manajemen user</a>
                         <a class="collapse-item" href="{{ route('admin.create') }}">tambah data</a>
+                        <a class="collapse-item" href="edit">edit hak akses role</a>
+                     
                         
                     </div>
                 </div>
@@ -66,7 +68,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                    
 
-                        <a class="collapse-item" href="tulisan">form status</a>
+                        <a class="collapse-item" href="tulisan">form pengaduan</a>
                     </div>
                 </div>
             </li>
