@@ -5,29 +5,23 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
 
-
-
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/create', [UserController::class, 'create'])->name('siswa.create');
-    Route::post('/create', [UserController::class, 'store'])->name('siswa.store');
+
+    Route::get('/create', [UserController::class, 'create'])->name('admin.create');
+    Route::post('/create', [UserController::class, 'store'])->name('admin.store');
+
+    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('admin.edit');
+    Route::put('/update/{id}', [UserController::class, 'update'])->name('admin.update');
+
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.delete');
+
+    Route::get('/rolemanagement', action: function () {
+        return view('admin.rolemanagement');
+    })->name('admin.rolemanagement');
+
 });
 
 
-
-
-
-
-
-
-Route::get('/create', function () {
-    return view('admin.create');
-})->name('admin.create');
-Route::get('/rolemanagement', function () {
-    return view('admin.rolemanagement');
-})->name('admin.rolemanagement');
-Route::get('/edit', function () {
-    return view('admin.edit');
-})->name('admin.edit');
 
 
 

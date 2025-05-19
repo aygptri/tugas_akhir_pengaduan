@@ -5,34 +5,54 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash; // Jangan lupa tambahkan ini
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
-class UserController extends Controller // Perhatikan huruf kapital di awal
+class UserController extends Controller
 {
     public function create()
     {
-        $roles = Role::all();
-        return view('admin.create', compact('roles'));
+        $user = User::get();
+        return view('admin.create', compact('user'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|exists:roles,name'
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', Rules\Password::defaults()],
+    ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password), // Perbaikan: Password harus di-hash
-        ]);
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
 
-        $user->assignRole($request->role);
+    return redirect()->route('admin.create')->with('success', 'Siswa berhasil ditambahkan.');
+}
 
-        return redirect()->route('siswa.create') // Sesuaikan dengan nama route
-               ->with('success', 'User berhasil dibuat!');
+
+
+    public function edit($id){
+        $user = User::find($id);
+        return view('admin.edit', compact('user'));
+    }
+
+    public function update(Request $request, $id){
+        $user = User::find($id);
+                $user->name = $request->name; 
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->update();
+        
+        return redirect()->route('admin.create');
+    }
+
+    public function destroy($id){
+        $user = User::find($id);
+        $user->delete();
+                return redirect()->route('admin.create');
     }
 }

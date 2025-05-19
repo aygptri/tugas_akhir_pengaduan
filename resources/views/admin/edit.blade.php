@@ -16,18 +16,18 @@
             <h6 class="m-0 font-weight-bold text-primary">Form Edit Pengguna</h6>
         </div>
         <div class="card-body">
-            <form>
+            <form method="post" action="{{ route('siswa.update',$users->id) }}">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="name" value="Admin Utama" readonly>
+                            <input type="text" class="form-control" id="name" value="{{ $users->name }}" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" value="admin@sekolah.sch.id" readonly>
+                            <input type="email" class="form-control" id="email" value="{{  $users->email}}" readonly>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="password">Password Baru (Opsional)</label>
-                            <input type="password" class="form-control" id="password" placeholder="Kosongkan jika tidak diubah">
+                            <input type="password" class="form-control" id="password" placeholder="Kosongkan jika tidak diubah" 
+                            value="{{  $users->email}}">
                         </div>
                     </div>
                     <div class="col-md-6">

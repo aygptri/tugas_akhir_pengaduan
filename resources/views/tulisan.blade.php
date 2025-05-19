@@ -61,7 +61,7 @@
                         <div class="form-group">
                             <label for="lampiran">Lampiran (Opsional)</label>
                             <input type="file" class="form-control-file @error('lampiran') is-invalid @enderror" 
-                                   id="lampiran" name="lampiran">
+                                   id="lampiran" name="lampiran" accept=".png, .jpeg, .jpg">
                             <small class="form-text text-muted">
                                 Format: JPG, PNG, PDF (Maks. 2MB)
                             </small>

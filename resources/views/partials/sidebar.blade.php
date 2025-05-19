@@ -42,7 +42,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="rolemanagement">Manajemen user</a>
                         <a class="collapse-item" href="{{ route('admin.create') }}">tambah data</a>
-                        <a class="collapse-item" href="edit">edit hak akses role</a>
                      
                         
                     </div>
