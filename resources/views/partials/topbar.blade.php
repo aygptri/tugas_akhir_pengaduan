@@ -1,10 +1,5 @@
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -51,11 +46,19 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
-                        <form method="POST" action="{{ route('logout') }}">
-    @csrf
-    <button type="submit" class="dropdown-item">Logout</button>
-</form>
+
+                        <!-- Nav Item - User Name -->
+        <li class="nav-item d-flex align-items-center">
+    <span class="font-weight-bold text-gray-600" style="margin-right: 1.5rem;">
+        {{ auth()->user()->name }}
+    </span>
+    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-link text-gray-600 p-0 border-0" style="text-decoration: none;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </form>
+</li>
 
                     </ul>
 

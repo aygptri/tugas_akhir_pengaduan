@@ -12,17 +12,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Force Inter font for input, textarea, button, etc */
         body, input, button, select, textarea {
             font-family: 'Inter', sans-serif;
         }
+
+        .bg-cover-custom {
+            background-image: url('{{ asset('images/bg.png') }}');
+            background-size: cover;
+            background-position: center;
+        }
     </style>
 </head>
-<body class="min-h-screen bg-blue-600 flex items-center justify-center font-sans">
+<body class="relative min-h-screen bg-cover-custom overflow-hidden flex flex-col justify-between">
 
-    <div class="w-full max-w-md px-6 py-8 bg-white rounded-lg shadow-lg">
-        {{ $slot }}
+    <!-- Layer biru transparan -->
+    <div class="absolute inset-0 bg-blue-800 opacity-60 z-0"></div>
+
+    <!-- Konten -->
+    <main class="relative z-10 flex-grow flex items-center justify-center px-4 py-8">
+        <div class="w-full max-w-md bg-white bg-opacity-90 rounded-lg shadow-lg p-6 text-center">
+            <!-- Logo -->
+            <div class="mb-6">
+                <img src="{{ asset('images/smk.png') }}" alt="Logo Sekolah" class="w-24 mx-auto">
+            </div>
+
+            <!-- Form Login/Register -->
+            {{ $slot }}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 w-full bg-white text-black text-center text-sm py-3 mt-8">
+    <div class="container mx-auto">
+        <span>&copy; {{ date('Y') }} Website Pengaduan Siswa. All rights reserved.</span>
     </div>
+</footer>
 
 </body>
 </html>

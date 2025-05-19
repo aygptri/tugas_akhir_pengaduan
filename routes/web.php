@@ -61,5 +61,10 @@ Route::get('tulisan',function(){
 })->middleware(middleware: ['auth', 'verified','role_or_permission:lihat-tulisan|admin']);
 
 
+Route::get('detail',function(){
+    return view('detail');
+});
+
+
 require __DIR__.'/auth.php';
 //sampai sini

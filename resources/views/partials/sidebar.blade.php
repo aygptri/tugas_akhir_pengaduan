@@ -4,8 +4,8 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <div class="sidebar-brand-icon">
+                    <img src="{{ asset('images/smk.png') }}" alt="Logo SMK" style="width: 150%; height: 150%; object-fit: contain; display: block;">
                 </div>
                 <div class="sidebar-brand-text mx-3">Form pengaduan siswa</div>
             </a>
@@ -71,4 +71,10 @@
                         <a class="collapse-item" href="tulisan">form pengaduan</a>
                     </div>
                 </div>
+            </li>
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="detail">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Detail </span></a>
             </li>

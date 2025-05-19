@@ -10,11 +10,14 @@
 
     <style>
         body {
-            background-color: #4e73df; /* Warna biru SB Admin */
-            color: #ffffff;
+            margin: 0;
+            padding: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background: url('{{ asset('images/bg.png') }}') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
         }
 
         .main-content {
@@ -24,6 +27,7 @@
             align-items: center;
             text-align: center;
             padding: 30px;
+            background-color: rgba(78, 115, 223, 0.8); /* Warna biru SB Admin semi transparan */
         }
 
         .logo {
@@ -65,7 +69,7 @@
 
     <div class="main-content">
         <div>
-            <img src="{{ asset('logo.png') }}" alt="Logo" class="logo"> {{-- Ganti dengan logo kamu --}}
+            <img src="{{ asset('images/smk.png') }}" alt="Logo" class="logo">
             <h1 class="mb-3 fw-bold">Selamat Datang</h1>
             <p class="mb-4">Ini adalah website pengaduan siswa. Silakan login terlebih dahulu untuk melanjutkan.</p>
 
@@ -83,10 +87,12 @@
             @endif
         </div>
     </div>
-
-    <footer>
-        &copy; {{ date('Y') }} Website Pengaduan Siswa. All rights reserved.
-    </footer>
+<footer class="relative z-10 w-full bg-white text-black text-center text-sm py-3 mt-8">
+    <div class="container mx-auto">
+        <span>&copy; {{ date('Y') }} Website Pengaduan Siswa. All rights reserved.</span>
+    </div>
+</footer>
+    
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
