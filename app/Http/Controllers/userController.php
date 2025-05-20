@@ -12,8 +12,9 @@ class UserController extends Controller
 {
     public function create()
     {
+        $roles = Role::all();
         $user = User::get();
-        return view('admin.create', compact('user'));
+        return view('admin.create', compact('user','roles'));
     }
 
 public function store(Request $request)
@@ -22,27 +23,35 @@ public function store(Request $request)
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
         'password' => ['required', Rules\Password::defaults()],
+        'role' => ['required', 'exists:roles,name']
     ]);
 
-    User::create([
+    // Buat user baru dari input form
+    $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
-        'password' => Hash::make($request->password),
+        'password' => bcrypt($request->password)
     ]);
 
-    return redirect()->route('admin.create')->with('success', 'Siswa berhasil ditambahkan.');
+    // Assign role dari dropdown
+    $user->assignRole($request->role);
+
+    return redirect()->route('admin.create')->with('success', 'User berhasil ditambahkan.');
 }
 
 
 
+
     public function edit($id){
-        $user = User::find($id);
-        return view('admin.edit', compact('user'));
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+        return view('admin.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, $id){
+
         $user = User::find($id);
-                $user->name = $request->name; 
+        $user->name = $request->name; 
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->update();
@@ -51,8 +60,10 @@ public function store(Request $request)
     }
 
     public function destroy($id){
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $user->delete();
-                return redirect()->route('admin.create');
+        
+        return redirect()->route('admin.create')->with('success', 'User berhasil dihapus.');
+
     }
 }

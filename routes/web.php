@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -15,14 +16,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.delete');
 
-    Route::get('/rolemanagement', action: function () {
-        return view('admin.rolemanagement');
-    })->name('admin.rolemanagement');
+   Route::get('/rolemanagement', function () {
+    $user = \App\Models\User::all(); 
+    return view('admin.rolemanagement', compact('user'));
+})->name('admin.rolemanagement');
 
 });
-
-
-
 
 
 // dari sini jangan di ubah

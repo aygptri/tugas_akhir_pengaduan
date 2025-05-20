@@ -24,6 +24,18 @@
                             <input type="text" class="form-control" id="name" value="{{ $users->name }}" readonly>
                         </div>
                     </div>
+                    <div class="mb-3 row">
+    <label for="role" class="col-sm-2 col-form-label">Role</label>
+    <div class="col-sm-10">
+        <select class="form-select" name="role" id="role">
+            @foreach ($roles as $role)
+                <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>
+                    {{ ucfirst($role->name) }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>

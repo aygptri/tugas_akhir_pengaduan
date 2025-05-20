@@ -32,11 +32,37 @@
                    <div class="col-sm-10">
                        <input type="text" class="form-control" name='name' id="nama">
                     </div>
-            </div>
+            </div><div class="mb-3 row">
+    <label for="role" class="col-sm-2 col-form-label">Role</label>
+    <div class="col-sm-10">
+        <select class="form-select" name="role" id="role">
+            @foreach ($roles as $role)
+                <option value="{{ $role->name }}">{{ ucfirst($role->name) }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>   
             <div class="mb-3 row">
                 <label for="nama" class="col-sm-2 col-form-label">password</label>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" name='password' id="password">
+                  <input type="password" 
+               class="form-control" 
+               id="password" 
+               name="password"
+               required 
+               autocomplete="new-password">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="jurusan" class="col-sm-2 col-form-label">confirm password   </label>
+                <div class="col-sm-10">
+                  <input type="password" 
+               class="form-control" 
+               id="password_confirmation" 
+               name="password_confirmation" 
+               required 
+               autocomplete="new-password">
+
                 </div>
             </div>
             <div class="mb-3 row">
@@ -47,34 +73,7 @@
             </div>
         <div class="mb-3 row">
             
-  <!--    <label for="permissions" class="col-sm-2 col-form-label">Berikan Hak Akses</label>
-    <div class="col-sm-10">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="permissions[]" value="create" id="permCreate">
-            <label class="form-check-label" for="permCreate">
-                Tambah
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="permissions[]" value="read" id="permRead">
-            <label class="form-check-label" for="permRead">
-                Lihat
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="permissions[]" value="edit" id="permEdit">
-            <label class="form-check-label" for="permEdit">
-                Edit
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="permissions[]" value="delete" id="permDelete">
-            <label class="form-check-label" for="permDelete">
-                Hapus
-            </label>
-        </div>
-    </div>
-</div> -->
+
 
             <div class="mb-3 row">
                 <label for="jurusan" class="col-sm-2 col-form-label"></label>
@@ -82,16 +81,13 @@
             </div>
           </form>
         </div>
-        <!-- AKHIR FORM -->
-        
-        <!-- START DATA -->
+    
+
         <div class="my-3 p-3 bg-body rounded shadow-sm">
 
                 
                 <!-- TOMBOL TAMBAH DATA -->
-                <div class="pb-3">
-                  <a href='' class="btn btn-primary">+ Tambah Data</a>
-                </div>
+              
                 
                 <table class="table table-striped">
                     <thead>
@@ -110,7 +106,7 @@
         <td>{{ $data->name }}</td>
         <td>{{ $data->password }}</td>
         <td>{{ $data->email }}</td>
-    </tr>
+  <td>{{ $data->getRoleNames()->first() }}</td>    </tr>
 @endforeach
 
                     </tbody>
