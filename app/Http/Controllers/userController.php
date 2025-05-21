@@ -39,31 +39,41 @@ public function store(Request $request)
     return redirect()->route('admin.create')->with('success', 'User berhasil ditambahkan.');
 }
 
-
-
-
     public function edit($id){
         $user = User::findOrFail($id);
         $roles = Role::all();
         return view('admin.edit', compact('user', 'roles'));
     }
 
-    public function update(Request $request, $id){
+public function update(Request $request, $id){
 
-        $user = User::find($id);
-        $user->name = $request->name; 
-        $user->email = $request->email;
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $id, 
+        'password' => 'nullable',
+        'role' => 'required|exists:roles,name'
+    ]);
+
+    $user = User::findOrFail($id);
+    $user->name = $request->name;
+    $user->email = $request->email;
+
+    if ($request->filled('password')) {
         $user->password = Hash::make($request->password);
-        $user->update();
-        
-        return redirect()->route('admin.create');
     }
+
+    $user->save();
+
+    $user->syncRoles([$request->role]);
+    return redirect()->route('admin.create')->with('success', 'User berhasil diperbarui!');
+}
+
 
     public function destroy($id){
         $user = User::findOrFail($id);
         $user->delete();
         
-        return redirect()->route('admin.create')->with('success', 'User berhasil dihapus.');
+        return redirect()->route('admin.rolemanagement')->with('success', 'User berhasil dihapus.');
 
     }
 }

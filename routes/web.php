@@ -12,9 +12,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/create', [UserController::class, 'store'])->name('admin.store');
 
     Route::get('/edit/{id}', [UserController::class, 'edit'])->name('admin.edit');
-    Route::put('/update/{id}', [UserController::class, 'update'])->name('admin.update');
+    Route::put('/edit/{id}', [UserController::class, 'update'])->name('admin.update');
 
-    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.delete');
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.destroy');
 
    Route::get('/rolemanagement', function () {
     $user = \App\Models\User::all(); 

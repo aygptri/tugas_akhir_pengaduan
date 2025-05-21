@@ -43,11 +43,9 @@
         <td>{{ $data->email }}</td>
         <td>{{ $data->getRoleNames()->first() }}</td>
         <td>
-            <!-- Tombol Edit -->
             <a href="{{ route('admin.edit', $data->id) }}" class="btn btn-sm btn-warning">Edit</a>
 
-            <!-- Tombol Hapus -->
-            <form onsubmit="return confirm('Yakin mau hapus user ini?')" class="d-inline"  method="POST">
+            <form onsubmit="return confirm('Yakin mau hapus user ini?')" class="d-inline" action="{{ route('admin.destroy', $data->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button class="btn btn-sm btn-danger" type="submit">Hapus</button>
