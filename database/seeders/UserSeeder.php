@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
             'password'=> bcrypt('12345678')
         ]);
         $admin->assignRole('admin');
+        
 
         $penulis = User::create([
             'name' => 'penulis',

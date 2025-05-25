@@ -31,7 +31,7 @@
         <th>Password (Hash)</th>
         <th>Email</th>
         <th>Role</th>
-        <th>Aksi</th> <!-- Tambahan -->
+        <th>Aksi</th> 
     </tr>
 </thead>
 <tbody>

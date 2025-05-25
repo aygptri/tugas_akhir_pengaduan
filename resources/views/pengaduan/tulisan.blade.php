@@ -22,7 +22,7 @@
                 
                 <!-- Card Body -->
                 <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data">
+                    <form method="POST" enctype="multipart/form-data" action="{{ route('pengaduan.kirim') }}">
                         @csrf
                         
                         <div class="form-group">
@@ -33,42 +33,29 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="kategori">Kategori</label>
-                            <select class="form-control @error('kategori') is-invalid @enderror" 
-                                    id="kategori" name="kategori" required>
-                                <option value="">Pilih Kategori</option>
-                                <option value="Fasilitas">Fasilitas Sekolah</option>
-                                <option value="Guru">Guru/Pengajar</option>
-                                <option value="Administrasi">Administrasi</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
-                            @error('kategori')
+                            <label for="isi">Deskripsi Lengkap</label>
+                            <textarea class="form-control @error('isi') is-invalid @enderror" 
+                                      id="isi" name="isi" rows="5" required>{{ old('isi') }}</textarea>
+                            @error('isi')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         
                         <div class="form-group">
-                            <label for="deskripsi">Deskripsi Lengkap</label>
-                            <textarea class="form-control @error('deskripsi') is-invalid @enderror" 
-                                      id="deskripsi" name="deskripsi" rows="5" required>{{ old('deskripsi') }}</textarea>
-                            @error('deskripsi')
+                            <label for="foto">Foto (Opsional)</label>
+                            <input type="file" class="form-control-file @error('foto') is-invalid @enderror" 
+                                   id="foto" name="foto" accept=".png, .jpeg, .jpg">
+                            @error('foto')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+{{-- 
                         <div class="form-group">
-                            <label for="lampiran">Lampiran (Opsional)</label>
-                            <input type="file" class="form-control-file @error('lampiran') is-invalid @enderror" 
-                                   id="lampiran" name="lampiran" accept=".png, .jpeg, .jpg">
-                            <small class="form-text text-muted">
-                                Format: JPG, PNG, PDF (Maks. 2MB)
-                            </small>
-                            @error('lampiran')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            <label for="waktu_kejadian" class="form-label">Waktu Kejadian</label>
+                            <input type="datetime-local" class="form-control" id="waktu_kejadian" name="waktu_kejadian" value="{{ old('waktu_kejadian') }}">
+                        </div> --}}
                         
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary">
@@ -93,8 +80,7 @@
                     <ul>
                         <li>Isi judul dengan singkat dan jelas</li>
                         <li>Deskripsi harus detail tentang masalah yang diadukan</li>
-                        <li>Lampiran bisa berupa foto atau dokumen pendukung</li>
-                        <li>Pengaduan akan diproses dalam 1-3 hari kerja</li>
+                        <li>Foto bisa berupa bukti pendukung pengaduan</li>
                     </ul>
                 </div>
             </div>
@@ -103,15 +89,4 @@
 
 </div>
 <!-- /.container-fluid -->
-@endsection
-
-@section('scripts')
-<script>
-    // Validasi form sebelum submit
-    document.querySelector('form').addEventListener('submit', function(e) {
-        if(!confirm('Apakah Anda yakin ingin mengirim pengaduan ini?')) {
-            e.preventDefault();
-        }
-    });
-</script>
 @endsection

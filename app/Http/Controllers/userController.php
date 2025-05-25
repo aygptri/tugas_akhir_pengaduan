@@ -26,14 +26,12 @@ public function store(Request $request)
         'role' => ['required', 'exists:roles,name']
     ]);
 
-    // Buat user baru dari input form
     $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => bcrypt($request->password)
     ]);
 
-    // Assign role dari dropdown
     $user->assignRole($request->role);
 
     return redirect()->route('admin.create')->with('success', 'User berhasil ditambahkan.');
@@ -45,27 +43,31 @@ public function store(Request $request)
         return view('admin.edit', compact('user', 'roles'));
     }
 
-public function update(Request $request, $id){
-
+public function update(Request $request, $id)
+{
     $request->validate([
         'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users,email,' . $id, 
-        'password' => 'nullable',
+        'email' => 'required|email|unique:users,email,'.$id,
+        'password' => 'nullable|confirmed', 
         'role' => 'required|exists:roles,name'
     ]);
 
     $user = User::findOrFail($id);
     $user->name = $request->name;
     $user->email = $request->email;
-
-    if ($request->filled('password')) {
+    $user->password = $request->password;
+    
+    if(!empty($request->password)){
         $user->password = Hash::make($request->password);
     }
-
+    
     $user->save();
-
+    
     $user->syncRoles([$request->role]);
-    return redirect()->route('admin.create')->with('success', 'User berhasil diperbarui!');
+    $user->syncPermissions($request->permissions);
+
+    
+    return redirect()->route('admin.rolemanagement')    ;
 }
 
 
