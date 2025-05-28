@@ -18,25 +18,54 @@ class PengaduanController extends Controller
         
         return view('pengaduan.tulisan');
     }
- public function index()
-{
-    if (auth()->user()->hasRole(['admin', 'penulis'])) {
-        $laporan = Laporan::latest()->get();
-    } else {
-        $laporan = Laporan::where('user_id', auth()->id())->latest()->get();
+     public function index(Request $request)
+    {
+        $search = $request->input('search');
+
+        if (auth()->user()->hasRole(['admin', 'penulis'])) {
+            $laporan = Laporan::when($search, function ($query, $search) {
+                return $query->where('judul', 'like', "%$search%")
+                             ->orWhere('isi', 'like', "%$search%");
+            })->latest()->get();
+
+            $totalPengaduan = Laporan::count();
+            $pengaduanDiproses = Laporan::where('status', 'diproses')->count();
+            $pengaduanDiterima = Laporan::where('status', 'diterima')->count();
+            $pengaduanSelesai = Laporan::where('status', 'selesai')->count();
+        } else {
+            $laporan = Laporan::where('user_id', auth()->id())
+                ->when($search, function ($query, $search) {
+                    return $query->where('judul', 'like', "%$search%")
+                                 ->orWhere('isi', 'like', "%$search%");
+                })->latest()->get();
+
+            $totalPengaduan = Laporan::where('user_id', auth()->id())->count();
+            $pengaduanDiproses = Laporan::where('user_id', auth()->id())->where('status', 'diproses')->count();
+            $pengaduanDiterima = Laporan::where('user_id', auth()->id())->where('status', 'diterima')->count();
+            $pengaduanSelesai = Laporan::where('user_id', auth()->id())->where('status', 'selesai')->count();
+        }
+
+        return view('dashboard', compact(
+            'laporan', 
+            'totalPengaduan', 
+            'pengaduanDiproses', 
+            'pengaduanDiterima', 
+            'pengaduanSelesai'
+        ));
     }
 
-    return view('dashboard', compact('laporan'));
-}
+
 
 
 
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required|string|max:255',
-            'isi' => 'required|string',
+            'judul' => 'required|max:100',
+            'isi' => 'required',
             'foto' => ['nullable', 'image', ],
+        ],[
+            'judul.max' => 'hanya bisa mengirim 100 huruf/karakter',
         ]);
 
     $fotoPath = null;
@@ -59,7 +88,7 @@ class PengaduanController extends Controller
         $laporan = Laporan::findOrFail($id);
         $laporan->delete();
         
-        return redirect()->route('dashboard')->with('success', 'User berhasil dihapus.');
+        return redirect()->route('dashboard')->with('success', 'laporan berhasil dihapus.');
 
     }
 
@@ -78,7 +107,7 @@ public function operatorIndex()
     $laporan->status = $request->status;
     $laporan->save();
 
-    return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+    return redirect()->back()->with('success', 'Status berhasil diperbarui');
 }
 
 

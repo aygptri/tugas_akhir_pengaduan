@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-@if ($errors->any())
+{{-- @if ($errors->any())
  <div class="pt-3">
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $item)
-                <li>{{ $errors }}</li>
+                <li>{{ $item}}</li>
             @endforeach
         </ul>
     </div>
  </div>
     
-@endif
+@endif --}}
 <!doctype html>
 <html lang="en">
   <head>
@@ -25,12 +25,23 @@
     <main class="container">
        <!-- START FORM -->
        <form action='{{route('admin.store')  }}' method='post'>
+        @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
         @csrf
            <div class="my-3 p-3 bg-body rounded shadow-sm">
                <div class="mb-3 row">
-                   <label for="nim" class="col-sm-2 col-form-label">nama</label>
+                   <label for="nim" class="col-sm-2 col-form-label" >nama</label>
                    <div class="col-sm-10">
-                       <input type="text" class="form-control" name='name' id="nama">
+                       <input type="text" class="form-control" name='name' id="name" value="{{ old('name') }}">
+                       @error('name')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+
                     </div>
             </div><div class="mb-3 row">
     <label for="role" class="col-sm-2 col-form-label">Role</label>
@@ -50,7 +61,12 @@
                id="password" 
                name="password"
                required 
-               autocomplete="new-password">
+               autocomplete="new-password"
+               value="{{ old('password') }}">
+               @error('password')
+              <div class="text-danger">{{ $message }}</div>
+               @enderror
+
                 </div>
             </div>
             <div class="mb-3 row">
@@ -61,14 +77,23 @@
                id="password_confirmation" 
                name="password_confirmation" 
                required 
-               autocomplete="new-password">
+               autocomplete="new-password"
+               value="{{ old('password_confirmation') }}">
+               @error('password_confirmation')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+
 
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="jurusan" class="col-sm-2 col-form-label">email</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" name='email' id="email">
+                    <input type="email" class="form-control" name='email' id="email" value="{{ old('email') }}">
+                    @error('email')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+
                 </div>
             </div>
         <div class="mb-3 row">
@@ -83,36 +108,7 @@
         </div>
     
 
-        <div class="my-3 p-3 bg-body rounded shadow-sm">
-
-                
-                <!-- TOMBOL TAMBAH DATA -->
-                            
-                
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                  <th class="col-md-1">No</th>
-                            <th class="col-md-3">Nama</th>
-                            <th class="col-md-4">password</th>
-                            <th class="col-md-2">email</th>
-                            <th class="col-md-2">role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-@foreach ($user as $no => $data)
-    <tr>
-        <td>{{ $no + 1 }}</td>
-        <td>{{ $data->name }}</td>
-        <td>{{ $data->password }}</td>
-        <td>{{ $data->email }}</td>
-  <td>{{ $data->getRoleNames()->first() }}</td>    </tr>
-@endforeach
-
-                    </tbody>
-                </table>
-               
-          </div>
+       
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>

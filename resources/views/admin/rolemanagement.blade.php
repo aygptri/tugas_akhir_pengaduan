@@ -8,7 +8,11 @@
         <h1 class="h3 mb-0 text-gray-800">Manajemen user</h1>
 
     </div>
-
+@if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
     <!-- Tabel Laporan -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -21,6 +25,7 @@
                 
             </div>
         </div>
+        
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -28,7 +33,6 @@
     <tr>
         <th>No</th>
         <th>Nama</th>
-        <th>Password (Hash)</th>
         <th>Email</th>
         <th>Role</th>
         <th>Aksi</th> 
@@ -39,7 +43,6 @@
     <tr>
         <td>{{ $no + 1 }}</td>
         <td>{{ $data->name }}</td>
-        <td>{{ $data->password }}</td>
         <td>{{ $data->email }}</td>
         <td>{{ $data->getRoleNames()->first() }}</td>
         <td>

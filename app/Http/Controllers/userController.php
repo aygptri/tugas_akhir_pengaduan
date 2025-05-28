@@ -20,10 +20,28 @@ class UserController extends Controller
 public function store(Request $request)
 {
     $request->validate([
-        'name' => ['required', 'string', 'max:255'],
+        'name' => ['required', 'string', 'max:50','min:2','unique:users'],
         'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
-        'password' => ['required', Rules\Password::defaults()],
+        'password' => ['required', 'min:8'],
         'role' => ['required', 'exists:roles,name']
+    ],[
+        'name.required' => 'nama wajib di isi',
+        'name.string' => 'nama wajib huruf',
+        'name.max' => 'nama maks 50 huruf',
+        'name.min' => 'nama minimal lebih 2 huruf',
+        'name.unique' => 'nama sudah digunakan user lain',  
+
+    'email.required' => 'Email tidak boleh kosong',
+    'email.string' => 'Email harus berupa teks yang valid',
+    'email.lowercase' => 'Email harus huruf kecil ',
+    'email.email' => 'Format email salah gunakan @gmail.com',
+    'email.max' => 'Email maksimal 255 karakter ',
+    'email.unique' => 'Email ini sudah dipakai user lain',
+
+    'password.required' => 'password harus di isi',
+    'password.min' => 'password minimal 8 huruf',
+
+
     ]);
 
     $user = User::create([
@@ -46,7 +64,7 @@ public function store(Request $request)
 public function update(Request $request, $id)
 {
     $request->validate([
-        'name' => 'required|string|max:255',
+        'name' => 'required|string|max:255|unique:users,name,'.$id,
         'email' => 'required|email|unique:users,email,'.$id,
         'password' => 'nullable|confirmed', 
         'role' => 'required|exists:roles,name'

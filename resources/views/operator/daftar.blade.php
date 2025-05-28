@@ -7,7 +7,11 @@
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Daftar Pengaduan Terbaru</h6>
             </div>
-
+ @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" width="100%" cellspacing="0">

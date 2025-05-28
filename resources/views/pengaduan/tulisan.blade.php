@@ -24,7 +24,11 @@
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" action="{{ route('pengaduan.kirim') }}">
                         @csrf
-                        
+                         @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
                         <div class="form-group">
                             <label for="judul">Judul Pengaduan</label>
                             <input type="text" class="form-control @error('judul') is-invalid @enderror" 
@@ -46,7 +50,7 @@
                         <div class="form-group">
                             <label for="foto">Foto (Opsional)</label>
                             <input type="file" class="form-control-file @error('foto') is-invalid @enderror" 
-                                   id="foto" name="foto" accept=".png, .jpeg, .jpg">
+                                   id="foto" name="foto" accept=".png, .jpeg, .jpg" value="{{ old('foto') }}">
                             @error('foto')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
